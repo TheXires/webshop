@@ -1,0 +1,91 @@
+header{
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  color: #000000;
+}
+
+hr{
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+header hr {
+  margin-top: -1.5rem;
+}
+
+[class*='navbar'] ul {
+  list-style-type: none;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 0;
+  overflow: hidden;
+}
+
+[class*='navbar'] li {
+  float: left;
+  font-size: 1.8rem;
+  margin: .1rem;
+  font-weight: bold;
+  color: #000000;
+}
+
+[class*='navbar'] li a {
+  display: block;
+  color: #000000;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+[class*='navbar'] li a:hover {
+  background-color: #5bd966;
+  color: #ffffff;
+}
+
+[class*='navbar'] li a.active {
+  background-color: #5bd966;
+  color: #ffffff;
+}
+
+[class*='navbar'] li a.logo {
+  color: #5bd966;
+}
+
+[class*='navbar'] li a.logo:hover {
+  color: #ffffff;
+}
+
+
+[class*='navbar'] li.right {
+  float: right;
+}
+
+.navbar_mobile > ul > li {
+  display: none;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+
+@media (max-width: 719px) {
+  .navbar_mobile li.right, .navbar_mobile li {
+    float: none;
+    font-size: 1.2rem;
+  }
+  .navbar{
+      display: none;
+  }
+  .navbar_mobile ul::before{
+    display: block;
+    content: "Menue";
+    text-align: center;
+    padding: .7rem;
+  }
+  .navbar_mobile ul:hover li{
+    display: block;
+  }
+  header hr {
+    margin-top: auto;
+  }
+}

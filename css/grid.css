@@ -1,0 +1,133 @@
+/*----------Item----------*/
+.grid_item {
+  width: auto;
+  height: auto;
+  margin: 1rem 0;
+}
+
+.grid_row{
+  display: block;
+}
+
+/* zusaetzliche classen fuer groessen */
+.grid_item_size_4 {
+  grid-column-start: auto;
+  grid-column-end: span 1;
+}
+
+.grid_item_size_3 {
+  grid-column-start: auto;
+  grid-column-end: span 1;
+}
+
+.grid_item_size_2 {
+  grid-column-start: auto;
+  grid-column-end: span 1;
+}
+
+/*----------Container----------*/
+.grid_container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'grid_item'
+  ;
+  grid-gap: 1rem;
+  margin: 0 1rem;
+}
+
+@media screen and (min-width: 576px) {
+  .grid_container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+    'grid_item grid_item'
+    ;
+  }
+
+  .grid_item_size_4 {
+    grid-column-start: auto;
+    grid-column-end: span 2;
+  }
+
+  .grid_item_size_3 {
+    grid-column-start: auto;
+    grid-column-end: span 2;
+  }
+
+  .grid_item_size_2 {
+    grid-column-start: auto;
+    grid-column-end: span 2;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .grid_container {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas:
+      'grid_item grid_item grid_item'
+      ;
+  }
+
+  .grid_item_size_4 {
+    grid-column-start: auto;
+    grid-column-end: span 3;
+  }
+
+  .grid_item_size_3 {
+    grid-column-start: auto;
+    grid-column-end: span 3;
+  }
+
+  .grid_item_size_2 {
+    grid-column-start: auto;
+    grid-column-end: span 2;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  .grid_container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+      'grid_item grid_item grid_item grid_item'
+      ;
+  }
+
+  .grid_item_size_4 {
+    grid-column-start: auto;
+    grid-column-end: span 4;
+  }
+
+  .grid_item_size_3 {
+    grid-column-start: auto;
+    grid-column-end: span 3;
+  }
+
+  .grid_item_size_2 {
+    grid-column-start: auto;
+    grid-column-end: span 2;
+  }
+}
+
+/* @media screen and (min-width: 1550px) {
+  .grid_container {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+      'grid_item grid_item grid_item grid_item grid_item'
+      ;
+  }
+
+  .grid_item_size_4 {
+    grid-column-start: auto;
+    grid-column-end: span 4;
+  }
+
+  .grid_item_size_3 {
+    grid-column-start: auto;
+    grid-column-end: span 3;
+  }
+
+  .grid_item_size_2 {
+    grid-column-start: auto;
+    grid-column-end: span 2;
+  }
+} */
