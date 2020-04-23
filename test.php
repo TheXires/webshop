@@ -1,7 +1,6 @@
 <?php
   require 'header.php';
 ?>
-<!--New Changes-->
 
 <!--Main Navigation-->
 <header>
