@@ -8,11 +8,11 @@
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="smartphone_brand">Marke</label>
-          <input type="text" class="form-control" id="smartphone_brand" name="artciel_title" placeholder="Marke" autofocus required>
+          <input type="text" class="form-control" id="smartphone_brand" name="smartphone_brand" placeholder="Marke" autofocus required>
         </div>
         <div class="form-group col-md-8">
           <label for="smartphone_name">Model</label>
-          <input type="text" class="form-control" id="smartphone_name" name="artcile_description" placeholder="Model">
+          <input type="text" class="form-control" id="smartphone_model" name="smartphone_model" placeholder="Model">
         </div>
       </div>
 
@@ -20,7 +20,7 @@
         <div class="form-group col-md-4">
           <label for="smartphone_brand">Gr&ouml;&szlig;e</label>
           <div class="input-group">
-            <input type="number" class="form-control" id="smartphone_size" name="smartphone_size" step="0.01" placeholder="6,41" autofocus required>
+            <input type="number" class="form-control" id="smartphone_size" name="smartphone_size" step="0.01" placeholder="6,41" required>
             <div class="input-group-append">
               <span class="input-group-text">Zoll</span>
             </div>
@@ -28,7 +28,7 @@
         </div>
         <div class="form-group col-md-4">
           <label for="smartphone_name">Zustand</label>
-          <select class="browser-default custom-select">
+          <select class="browser-default custom-select" id="smartphone_condition" name="smartphone_condition" required>
             <option selected>Zustand w&auml;hlen...</option>
             <option value="mint">Wie neu</option>
             <option value="nearmint">Sehr gut</option>
@@ -38,7 +38,7 @@
         </div>
         <div class="form-group col-md-4">
           <label for="smartphone_name">Speicher</label>
-          <select class="browser-default custom-select">
+          <select class="browser-default custom-select" id="smartphone_storage" name="smartphone_storage" required>
             <option selected>Gr&ouml;&szlig;e w&auml;hlen...</option>
             <option value="64">64 GB</option>
             <option value="128">128 GB</option>
@@ -60,14 +60,14 @@
         <div class="form-group col-md-4">
           <label for="smartphone_brand">Preis</label>
           <div class="input-group">
-            <input type="number" class="form-control" id="smartphone_size" name="smartphone_size" placeholder="299" required>
+            <input type="number" class="form-control" id="smartphone_price" name="smartphone_price" placeholder="299" required>
             <div class="input-group-append">
               <span class="input-group-text">€</span>
             </div>
           </div>
         </div>
       </div>
-      <button type="submit" name="addarticle_submit">Hinzuf&uuml;gen</button>
+      <button type="submit" name="smartphone_submit">Hinzuf&uuml;gen</button>
     </form>
   </div>
 </div>

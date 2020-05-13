@@ -19,4 +19,3 @@
     header('location: ../profile.php?error=failedtodelete');
     exit();
   }
-?>

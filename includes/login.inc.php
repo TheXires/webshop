@@ -43,4 +43,3 @@
   $sql_login->close();
 	$connection->close();
   }
-?>

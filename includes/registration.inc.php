@@ -66,4 +66,3 @@
   $sql_registration->close();
   $sql_registration_id->close();
   $connection->close();
-?>

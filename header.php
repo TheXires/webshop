@@ -21,7 +21,7 @@
         <div class="collapse navbar-collapse" id="navbarToggler">
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
@@ -30,22 +30,21 @@
               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
             </li>
           </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <?php
-            if(isset($_SESSION['userid'])){
-              echo '
-                <form class="form-inline" action="includes/logout.inc.php" method="post">
-                <button type="submit" class="btn btn-outline-danger mr-2" name="logout_submit">Abmelden</button>
-                <a class="btn btn-primary mr-2" href="profile.php">Mein Profil</a>
-              ';
-            }else{
-              echo '
-                <form class="form-inline">
-                <a class="btn btn-outline-success mr-2" href="registration.php">Registrieren</a>
-                <a class="btn btn-primary mr-2" href="login.php">Anmelden</a>
-              ';
-            }
-            ?>
+          <?php
+          if(isset($_SESSION['userid'])){
+            echo '
+              <form class="form-inline" action="includes/logout.inc.php" method="post">
+              <button type="submit" class="btn btn-outline-danger mr-2" name="logout_submit">Abmelden</button>
+              <a class="btn btn-primary mr-2" href="profile.php">Mein Profil</a>
+            ';
+          }else{
+            echo '
+              <form class="form-inline">
+              <a class="btn btn-outline-success mr-2" href="registration.php">Registrieren</a>
+              <a class="btn btn-primary mr-2" href="login.php">Anmelden</a>
+            ';
+          }
+          ?>
           </form>
         </div>
       </nav>
