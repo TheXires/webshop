@@ -6,17 +6,25 @@
 
   require 'connection.inc.php';
 
-// Variablen erstllung aus Inputfeldern
-  $smartphone_brand = $_POST['smartphone_brand'];
-  $smartphone_model = $_POST['smartphone_model'];
-  $smartphone_size = $_POST['smartphone_size'];
-  $smartphone_condition = $_POST['smartphone_condition'];
-  $smartphone_storage = $_POST['smartphone_storage'];
-  $smartphone_price = 100 * $_POST['smartphone_price'];
+  // Variablen erstllung aus Inputfeldern und schützen vor xss
+  $smartphone_brand = htmlspecialchars($_POST['smartphone_brand'], ENT_QUOTES, 'UTF-8');
+  $smartphone_model = htmlspecialchars($_POST['smartphone_model'], ENT_QUOTES, 'UTF-8');
+  $smartphone_size = htmlspecialchars($_POST['smartphone_size'], ENT_QUOTES, 'UTF-8');
+  $smartphone_condition = htmlspecialchars($_POST['smartphone_condition'], ENT_QUOTES, 'UTF-8');
+  $smartphone_storage = htmlspecialchars($_POST['smartphone_storage'], ENT_QUOTES, 'UTF-8');
+  $smartphone_price = htmlspecialchars($_POST['smartphone_price'], ENT_QUOTES, 'UTF-8');
 
-// prüfen ob alle Felder gesetzt sind
+  // prüfen ob alle Felder gesetzt sind
   if(empty($smartphone_brand) || empty($smartphone_model) || empty($smartphone_size) || empty($smartphone_condition) || empty($smartphone_storage) || empty($smartphone_price) || empty($_FILES['smartphone_img'])){
-    header('location: ../addarticle.php?error=emptyfields&brand='.$smartphone_brand.'&model='.$smartphone_model.'&size='.$smartphone_size.'&condition='.$smartphone_condition.'&storage='.$smartphone_storage.'&price='.$smartphone_price.'&img='.$_FILES["smartphone_img"]);
+    header('location: ../addarticle.php?
+        error=emptyfields
+        &brand='.$smartphone_brand.
+        '&model='.$smartphone_model.
+        '&size='.$smartphone_size.
+        '&condition='.$smartphone_condition.
+        '&storage='.$smartphone_storage.
+        '&price='.$smartphone_price.
+        '&img='.$_FILES["smartphone_img"]);
     exit();
   }
 
@@ -43,33 +51,58 @@
         $fileDestination = '../uploads/'.$img_name_new; //baut den Speicherort des Bildes zusammen
         move_uploaded_file($img_tmp_name, $fileDestination); // verscheibt das Bild vom Zwischenspeicher zum Speicherort
       }else{
-        header('location: ../addarticle.php?error=filetobig');
+        // wenn Bild zu groß ist
+        header('location: ../addarticle.php?
+            error=filetobig');
         exit();
       }
     }else{
-      header('location: ../addarticle.php?error=uploadproblem&code='.$img_error);
+      // wenn ein prblem beim upload entsteht
+      header('location: ../addarticle.php?error=uploadproblem&
+          code='.$img_error);
       exit();
     }
   } else {
-    header('location: ../addarticle.php?error=wrongfileformat&format='.$fileExt);
+    // wenn das hochgeladene Bild nicht eines der in $allowed angegebenen Formate hat
+    header('location: ../addarticle.php?
+        error=wrongfileformat&
+        format='.$fileExt);
     exit();
   }
 // File Upload End
 
+  // Bereite sql Abfrage vor
   $sql_article = $connection->prepare("INSERT INTO article (device_brand, device_model, device_size, device_condition, device_storage, device_price, device_img) VALUES (?, ?, ?, ?, ?, ?, ?)");
   if(!$sql_article){
-    header('location: ../addarticle.php?error=sqlerror&title='.$article_title.'&description='.$article_description.'&price='.$article_price);
-    exit();
-  }
-  $sql_article->bind_param('ssdssis', $smartphone_brand, $smartphone_model, $smartphone_size, $smartphone_condition, $smartphone_storage, $smartphone_price, substr($fileDestination, 3)); //ltrim entfernt die die er
-  $sql_article->execute();
-  if($sql_article !== flase){
-    header('location: ../article.php?adding=success');
-    exit();
-  }else{
-    header('location: ../addarticle.php?error=failedaddingarticle&brand='.$smartphone_brand.'&model='.$smartphone_model.'&size='.$smartphone_size.'&condition='.$smartphone_condition.'&storage='.$smartphone_storage.'&price='.$smartphone_price.'&img='.$_FILES["smartphone_img"]);
+    header('location: ../addarticle.php?
+        error=sqlerror
+        &title='.$article_title.
+        '&description='.$article_description.
+        '&price='.$article_price);
     exit();
   }
 
+  // füllt und führt Anfrage aus
+  $sql_article->bind_param('ssdssis', $smartphone_brand, $smartphone_model, $smartphone_size, $smartphone_condition, $smartphone_storage, $smartphone_price, substr($fileDestination, 3)); //ltrim entfernt die die er
+  $sql_article->execute();
+
+  // prüft ob einfügen ohne Probleme funktioniert hat
+  if($sql_article !== false){
+    header('location: ../article.php?adding=success');
+    exit();
+  }else{
+    header('location: ../addarticle.php?
+        error=failedaddingarticle
+        &brand='.$smartphone_brand.
+        '&model='.$smartphone_model.
+        '&size='.$smartphone_size.
+        '&condition='.$smartphone_condition.
+        '&storage='.$smartphone_storage.
+        '&price='.$smartphone_price.
+        '&img='.$_FILES["smartphone_img"]);
+    exit();
+  }
+
+  // offene Verbidungen beenden
   $sql_article->close();
   $connection->close();

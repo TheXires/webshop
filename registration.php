@@ -10,31 +10,23 @@
         # prueft ob ein error in der URL uebergeben wurde
         if(isset($_GET['error'])){
           # prueft welcher error in URL uebergeben wurde
-          if($_GET['error'] == 'usedemail'){
-            echo '
+          if($_GET['error'] == 'usedemail'){ ?>
               <div class="alert alert-danger mb-2" role="alert">
                 Diese E-Mail ist bereits registriert!
               </div>
-            ';
-          }else if($_GET['error'] == 'emptyfields'){
-            echo '
+          <?php }else if($_GET['error'] == 'emptyfields'){ ?>
               <div class="alert alert-danger mb-2" role="alert">
                 Bitte f&uuml;llen Sie alle Felder aus!
               </div>
-            ';
-          }else if($_GET['error'] == 'invalidemail'){
-            echo '
+          <?php }else if($_GET['error'] == 'invalidemail'){ ?>
               <div class="alert alert-danger mb-2" role="alert">
                 Bitte geben Sie eine g&uuml;ltige E-Mail ein!
               </div>
-            ';
-          }else if($_GET['error'] == 'invalidstreet'){
-            echo '
+          <?php }else if($_GET['error'] == 'invalidstreet'){ ?>
               <div class="alert alert-danger mb-2" role="alert">
                 Bitte geben Sie eine g&uuml;ltige Stra&szlig;e ein!
               </div>
-            ';
-          }
+          <?php }
         }
       ?>
 
@@ -110,61 +102,7 @@
   </div>
 </div>
 
-<script type="text/javascript">
-// Füllt das Formular mit allen in der URL uebergebenen parametern aus
-    url = window.location.search; // nimmt URL aus URL Zeile
-    urlParams = new URLSearchParams(url); // trennt die Parameter vom 'Naviationsteil'
-    if(urlParams.has('firstname')){ // pueft ob parameter in Parameterliste steht
-      input_firstname = document.getElementById('registration_firstname'); // sucht zum Parameter passendes inputfeld
-      input_firstname.value = urlParams.get('firstname'); // fuellt inputfeld mit parameter
-    }
-    if(urlParams.has('lastname')){ // pueft ob parameter in Parameterliste steht
-      input_lastname = document.getElementById('registration_lastname'); // sucht zum Parameter passendes inputfeld
-      input_lastname.value = urlParams.get('lastname'); // fuellt inputfeld mit parameter
-    }
-    if(urlParams.has('email')){ // pueft ob parameter in Parameterliste steht
-      input_email = document.getElementById('registration_email'); // sucht zum Parameter passendes inputfeld
-      input_email.value = urlParams.get('email'); // fuellt inputfeld mit parameter
-    }
-    if(urlParams.has('street')){ // pueft ob parameter in Parameterliste steht
-      input_street = document.getElementById('registration_street'); // sucht zum Parameter passendes inputfeld
-      input_street.value = urlParams.get('street'); // fuellt inputfeld mit parameter
-    }
-    if(urlParams.has('housenumber')){ // pueft ob parameter in Parameterliste steht
-      input_housenumber = document.getElementById('registration_houseNumber'); // sucht zum Parameter passendes inputfeld
-      input_housenumber.value = urlParams.get('housenumber'); // fuellt inputfeld mit parameter
-    }
-    if(urlParams.has('city')){ // pueft ob parameter in Parameterliste steht
-      input_city = document.getElementById('registration_city'); // sucht zum Parameter passendes inputfeld
-      input_city.value = urlParams.get('city'); // fuellt inputfeld mit parameter
-    }
-    if(urlParams.has('zipcode')){ // pueft ob parameter in Parameterliste steht
-      input_zipcode = document.getElementById('registration_zip'); // sucht zum Parameter passendes inputfeld
-      input_zipcode.value = urlParams.get('zipcode'); // fuellt inputfeld mit parameter
-    }
-
-    function passwordCheck(){
-      var password = document.getElementById('registration_password').value;
-      var password_repeat = document.getElementById('registration_password_repeat').value;
-
-      if(password != password_repeat){
-        if(password && password_repeat){
-          $('#registration_password').addClass("is-invalid");
-          $('#registration_password_repeat').addClass("is-invalid");
-          $('#registration_submit').prop('disabled', true);
-        }
-      }else{
-        $('#registration_password').removeClass("is-invalid");
-        $('#registration_password_repeat').removeClass("is-invalid");
-        $('#registration_submit').prop('disabled', false);
-      }
-      if(!password || !password_repeat){ // sorgt dafuer, dass Felder nicht invalid sind, wenn eins der Fleder Leer ist
-        $('#registration_password').removeClass("is-invalid");
-        $('#registration_password_repeat').removeClass("is-invalid");
-        $('#registration_submit').prop('disabled', false);
-      }
-    }
-</script>
+<script src="js/registration.js" charset="utf-8"></script>
 
 <?php
   require 'footer.html';

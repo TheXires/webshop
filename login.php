@@ -5,23 +5,22 @@
   <div class="col-10  col-sm-9 col-md-8 col-lg-7 col-xl-6">
     <form action="includes/login.inc.php" method="post">
       <h1 class="h3 mb-3 font-weight-normal">Anmeldung</h1>
+
+        <!-- Noch in JS umsetzen und in js/login.js speichern -->
       <?php
         if(isset($_GET['error'])){
-          if($_GET['error'] == 'wrongpassword'){
-            echo '
-              <div class="alert alert-danger" role="alert">
-                Passwort falsch!
-              </div>
-            ';
-          }else if($_GET['error'] == 'nomatch'){
-            echo '
-              <div class="alert alert-danger" role="alert">
-                Dieser Nutzer existiert noch nicht!
-              </div>
-            ';
-          }
+          if($_GET['error'] == 'wrongpassword'){ ?>
+            <div class="alert alert-danger" role="alert">
+              Passwort falsch!
+            </div>
+          <?php }else if($_GET['error'] == 'nomatch'){ ?>
+            <div class="alert alert-danger" role="alert">
+              Dieser Nutzer existiert noch nicht!
+            </div>
+          <?php }
         }
       ?>
+
       <label for="login_email" class="sr-only">Email address</label>
       <input type="email" id="login_email" name="login_email" class="form-control mb-3" placeholder="Email" required autofocus>
       <label for="login_password" class="sr-only">Password</label>
@@ -32,14 +31,7 @@
   </div>
 </div>
 
-<script type="text/javascript">
-  url = window.location.search; // nimmt URL aus URL Zeile
-  urlParams = new URLSearchParams(url); // trennt die Parameter vom 'Naviationsteil'
-  if(urlParams.has('email')){ // pueft ob parameter in Parameterliste steht
-    input_email = document.getElementsByName('login_email'); // sucht zum Parameter passendes inputfeld
-    input_email[0].value = urlParams.get('email'); // fuellt inputfeld mit parameter
-  }
-</script>
+<script src="js/login.js" charset="utf-8"></script>
 <?php
   require 'footer.html';
 ?>

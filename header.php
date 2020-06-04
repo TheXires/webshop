@@ -30,21 +30,16 @@
               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
             </li>
           </ul>
-          <?php
-          if(isset($_SESSION['userid'])){
-            echo '
+
+          <?php if(isset($_SESSION['userid'])){ ?>
               <form class="form-inline" action="includes/logout.inc.php" method="post">
               <button type="submit" class="btn btn-outline-danger mr-2" name="logout_submit">Abmelden</button>
               <a class="btn btn-primary mr-2" href="profile.php">Mein Profil</a>
-            ';
-          }else{
-            echo '
+          <?php }else{ ?>
               <form class="form-inline">
               <a class="btn btn-outline-success mr-2" href="registration.php">Registrieren</a>
               <a class="btn btn-primary mr-2" href="login.php">Anmelden</a>
-            ';
-          }
-          ?>
+          <?php } ?>
           </form>
         </div>
       </nav>

@@ -5,17 +5,21 @@
   <div class="col-10  col-sm-9 col-md-8 col-lg-7 col-xl-6">
     <form action="includes\addarticle.inc.php" method="post" enctype="multipart/form-data">
 
+      <!-- Eingabe des Marke -->
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="smartphone_brand">Marke</label>
           <input type="text" class="form-control" id="smartphone_brand" name="smartphone_brand" placeholder="Marke" autofocus required>
         </div>
+
+        <!-- Eingabe des Modelnamen -->
         <div class="form-group col-md-8">
           <label for="smartphone_name">Model</label>
           <input type="text" class="form-control" id="smartphone_model" name="smartphone_model" placeholder="Model">
         </div>
       </div>
 
+      <!-- Eingabe der Displaygröße -->
       <div class="form-row">
         <div class="form-group col-md-4">
           <label for="smartphone_brand">Gr&ouml;&szlig;e</label>
@@ -26,16 +30,20 @@
             </div>
           </div>
         </div>
+
+        <!-- Auswahl des Zustandes -->
         <div class="form-group col-md-4">
           <label for="smartphone_name">Zustand</label>
           <select class="browser-default custom-select" id="smartphone_condition" name="smartphone_condition" required>
             <option selected>Zustand w&auml;hlen...</option>
-            <option value="mint">Wie neu</option>
-            <option value="nearmint">Sehr gut</option>
-            <option value="good">Gut</option>
-            <option value="used">Stark genutzt</option>
+            <option value="Wie neu">Wie neu</option>
+            <option value="Sehr gut">Sehr gut</option>
+            <option value="Gut">Gut</option>
+            <option value="Stark genutzt">Stark genutzt</option>
           </select>
         </div>
+
+        <!-- Auswahl der Speichergröße -->
         <div class="form-group col-md-4">
           <label for="smartphone_name">Speicher</label>
           <select class="browser-default custom-select" id="smartphone_storage" name="smartphone_storage" required>
@@ -48,6 +56,7 @@
         </div>
       </div>
 
+      <!-- Bildupload -->
       <div class="form-row">
         <div class="form-group col-md-8">
           <label for="smartphone_img">Bilder</label>
@@ -57,31 +66,28 @@
             <small id="img_fromats" class="form-text text-muted">.jgp .jpeg .png</small>
           </div>
         </div>
+
+        <!-- Eingabe des Preises -->
         <div class="form-group col-md-4">
           <label for="smartphone_brand">Preis</label>
           <div class="input-group">
-            <input type="number" class="form-control" id="smartphone_price" name="smartphone_price" placeholder="299" required>
+            <input type="number" class="form-control" id="smartphone_price" name="smartphone_price" aria-describedby="pirce_info" placeholder="299" required>
             <div class="input-group-append">
               <span class="input-group-text">€</span>
             </div>
           </div>
+          <small id="pirce_info" class="form-text text-muted">Nur ganze Eurobetr&auml;ge</small>
         </div>
       </div>
-      <button type="submit" name="smartphone_submit">Hinzuf&uuml;gen</button>
+
+      <!-- Button zu senden des Formulares -->
+      <button type="submit" class="btn btn-primary" name="smartphone_submit">Hinzuf&uuml;gen</button>
     </form>
   </div>
 </div>
 
-
-<script>
-    $('#smartphone_img').on('change',function(){
-      //get the file name
-      var fileName = $(this).val();
-      //replace the "Choose a file" label
-      $(this).next('.custom-file-label').html(fileName);
-    });
-</script>
-
+<!-- Javascript zur manipulation des Formulares (auch durch Parameter in der URL) -->
+<script src="js/addarticle.js" charset="utf-8"></script>
 <?php
   require 'footer.html';
 ?>

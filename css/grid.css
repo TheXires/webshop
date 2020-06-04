@@ -5,6 +5,11 @@
   margin: 1rem 0;
 }
 
+.grid_item a {
+  text-decoration: none;
+  color: black;
+}
+
 .grid_row{
   display: block;
 }
