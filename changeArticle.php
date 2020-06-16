@@ -4,12 +4,14 @@
     header('location: login.php');
   }
   if($_SESSION['admin'] == 0){
-    header('location: index.php');
+    header('location: index.php?why');
   }
 ?>
 <div class="row justify-content-center">
   <div class="col-10  col-sm-9 col-md-8 col-lg-7 col-xl-6">
     <form action="includes\addarticle.inc.php" method="post" enctype="multipart/form-data">
+      <!-- nicht sichbares Inputfeld zum speichern der ArtikelID -->
+      <input type="hidden" id="hiddenArticleID" name="articleid">
 
       <!-- Eingabe des Marke -->
       <div class="form-row">
@@ -96,13 +98,13 @@
       </div>
 
       <!-- Button zu senden des Formulares -->
-      <button type="submit" class="btn btn-primary" name="smartphone_add">Hinzuf&uuml;gen</button>
+      <button type="submit" class="btn btn-primary" name="smartphone_change">Speichern</button>
     </form>
   </div>
 </div>
 
 <!-- Javascript zur manipulation des Formulares (auch durch Parameter in der URL) -->
-<script src="js/addarticle.js" charset="utf-8"></script>
+<script src="js/changeArticle.js" charset="utf-8"></script>
 <?php
   require 'footer.html';
 ?>

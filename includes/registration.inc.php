@@ -45,7 +45,7 @@
   $sql_emailcheck->execute();
   $sql_emailcheck_result = $sql_emailcheck->get_result();
 
-  // Wenn eine kein Eintrag vohanden ist wird der Nutzer registriert
+  // Wenn kein Eintrag vohanden ist wird der Nutzer registriert
   if($sql_emailcheck_result->num_rows == 0){
     // Erstellt Datenbankabfrage, um Nutzer zur Datenbank hinzuzufügen
     $sql_registration = $connection->prepare("INSERT INTO user (firstname, lastname, email, password, street, housenumber, city, zip, admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0)");
@@ -59,35 +59,20 @@
     $sql_registration->execute();
 
     // Prüft, ob Konto erfolgreich angelegt wurde
-    if($sql_registration !== false){
-
-// Könnte in funktion ausgelagert werden, zusammen mit dem normalen einloggen
-      // Erstellt der Datenbankabfrage zum einloggen des Nutzers
-      $sql_registration_id = $connection->prepare("SELECT userID FROM user WHERE email=?");
-      if(!$sql_registration_id){
-        header('location: ../registration.php?error=sqlerror');
-        exit();
-      }
-
-      // füllt und führt Anfrage zum einloggen aus
-      $sql_registration_id->bind_param("s", $email);
-	    $sql_registration_id->execute();
-	    $sql_registration_id_result = $sql_registration_id->get_result();
-
-	    if($row = $sql_registration_id_result->fetch_assoc()){
-
-        // automtisches einloggen des Nutzers nach erstellen des Kontos, durch setzen der Session
-        session_start();
-        $_SESSION['userid'] = $row['userID'];
-        $_SESSION['useremail'] = $email;
-        $_SESSION['username'] = $firstname;
-        $_SESSION['admin'] = 0;
-
-        header("location: ../index.php?registration=success");
-        exit();
-      }
+    if($sql_registration == false){
+      header('location: ../registration.php?error=registrationerror&firstname='.$firstname.'&lastname='.$lastname.'&email='.$email.'&street='.$street.'&housenumber='.$housenumber.'&city='.$city.'&zipcode='.$zipcode);
+      exit();
     }
-// Ende der möglichen Auslagerung
+
+    // automtisches einloggen des Nutzers nach erstellen des Kontos, durch setzen der Session
+    session_start();
+    $_SESSION['userid'] = $sql_registration->insert_id;
+    $_SESSION['useremail'] = $email;
+    $_SESSION['username'] = $firstname;
+    $_SESSION['admin'] = 0;
+
+    header("location: ../index.php?registration=success");
+    exit();
 
   // Wenn es bereits einen Eintrag gibt, wird der Nutzer darauf hingewiesen, dass diese Email bereits registriert ist
   }else{

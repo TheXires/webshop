@@ -10,9 +10,8 @@
     // sucht zum Parameter passendes inputfeld und fuellt inputfeld mit parameter
     $('#hiddenArticleID').val(urlParams.get('articleid'));
   }
-  console.log("1");
+
   if(urlParams.has('brand')){
-    console.log("2");
     $('#smartphone_brand').val(urlParams.get('brand'));
   }
 
@@ -29,7 +28,22 @@
   }
 
   if(urlParams.has('condition')){
-    $('#smartphone_condition').val(urlParams.get('condition'));
+
+    var condition;
+
+    if(urlParams.get('condition') == "Wie neu"){
+      condition = 1;
+    }else if(urlParams.get('condition') == "Sehr gut"){
+      condition = 2;
+    }else if(urlParams.get('condition') == "Gut"){
+      condition = 3;
+    }else if(urlParams.get('condition') == "Stark genutzt"){
+      condition = 4;
+    }else{
+      condition = 0;
+    }
+
+    $('#smartphone_condition').val(condition);
   }
 
   if(urlParams.has('storage')){
@@ -39,13 +53,3 @@
   if(urlParams.has('price')){
     $('#smartphone_price').val(urlParams.get('price'));
   }
-
-
-$('#smartphone_img').on('change',function(){
-  //get the file name
-  var path = $(this).val();
-  // löscht pfad soweit, dass nur noch der Dateiname vorhanden ist
-  var fileName = path.replace(/^.*(\\|\/|\:)/, '');
-  // ersetzt "Choose a file" label durch den Dateinamen
-  $(this).next('.custom-file-label').html(fileName);
-});

@@ -7,14 +7,27 @@ $(document).ready(function(){
     type: 'POST',
     // ziel Datei in der Daten weiterverarbeitet werden
     url: 'includes/purchases.inc.php',
+    data: {
+        'changeFunction': 'showPurchases'
+    },
     success: function(pResults){
       // Rückgabe aus PHP Datei in JS Objekt umwandeln
       var results = JSON.parse(pResults);
 
       // Geht alle Artikel durch
-      results.forEach(function(article) {
+      results.forEach(function(purchase) {
         // Ergänzt die Tabelle bei jedem Durchgang mit jeweiligem Artikeldatensatz
-        $('#purchases thead').append("<tr class='table_value'><td scope='row'>" + "user.ID" + "</td><td>" + "user.firstname" + "</td><td>" + "user.lastname" + "</td><td>" + "user.email" + "</td><td>" + "user.street" + "</td></tr>");
+        $('#purchases thead').append("" +
+          "<tr class='table_value'>" +
+            "<td>" + purchase.articleID + "</td>" +
+            "<td>" + purchase.brandName + "</td>" +
+            "<td>" + purchase.model + "</td>" +
+            "<td>" + purchase.conditionName + "</td>" +
+            "<td>" + purchase.quantity + "</td>" +
+            "<td>" + purchase.price + "</td>" +
+            "<td>" + purchase.date + "</td>" +
+            "</tr>" +
+          "");
       });
     }
   });

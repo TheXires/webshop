@@ -1,6 +1,11 @@
 <?php
   require 'header.php';
   require 'includes/userinfo.inc.php';
+
+  if(!isset($_SESSION['userid'])){
+    header('location: index.php');
+    exit();
+  }
 ?>
 
 <div class="row justify-content-center">
@@ -78,6 +83,19 @@
                     Hier k&ouml;nnen alle Nutzer des Webshops angezeigt und durchsucht werden.
                 </p>
                 <a class="btn btn-primary text-white" href="usersearch.php">Nutzer&uuml;bersicht</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Artikel hinzufügen -->
+          <div class="col-sm-4 mb-2">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">F&uuml;gen Sie neue Artikel hinzu</h5>
+                <p class="card-text">
+                    Hier k&ouml;nnen neue Artikel zum Webshop hinzugefügt werden.
+                </p>
+                <a class="btn btn-primary text-white" href="addarticle.php">Hinzuf&uuml;gen</a>
               </div>
             </div>
           </div>
