@@ -11,9 +11,10 @@
     <button type="button" id="search" class="btn btn-primary"><span class="mr-1 ml-1"><i class="fas fa-search"></i></span></button>
   </div>
 </div>
+
 <!-- Grid wird dynamisch durch serach.js erst geleert und dann gefüllt, nachdem auf "Suchen"-Butten geklickt wurde -->
 <div id="searchresults" class='grid_container justify-content-center'>
-  <!-- Inhalte die Shop erklären eintragen -->
+  <!-- Inhalte die Shop erklären eintragen mit Bild -->
 </div>
 
 

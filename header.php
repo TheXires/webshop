@@ -14,6 +14,7 @@
   </head>
   <body>
     <head>
+      <!-- Navigationsleiste -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
         <a class="navbar-brand" href="index.php">RePixelShop</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,6 +24,9 @@
           <!-- leere Liste, damit Buttons auf der rechten seite bleiben -->
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0"></ul>
 
+          <!-- Prüft ob Nutzer angemeldet ist
+               Wenn ja, bekommt er die Buttons "Ausloggen" und "Profil" angezeigt
+               Sonst "Einloggen" und "Registrieren" -->
           <?php if(isset($_SESSION['userid'])){ ?>
               <form class="form-inline" action="includes/logout.inc.php" method="post">
               <button type="submit" class="btn btn-outline-danger mr-2" name="logout_submit">Abmelden</button>

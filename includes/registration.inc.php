@@ -1,10 +1,11 @@
 <?php
+  require 'connection.inc.php';
+
+  // Wenn der Nutzer nicht über die Registrierenseite kommt wird er auf die Indexseite geleitet
   if(!isset($_POST['registration_submit'])){
     header("location: ../index.php");
     exit();
   }
-
-  require 'connection.inc.php';
 
   // setzen der Variablen und schützen vor xss
   $firstname = htmlspecialchars($_POST['registration_firstname'], ENT_QUOTES, 'UTF-8');
@@ -16,24 +17,25 @@
   $city = htmlspecialchars($_POST['registration_city'], ENT_QUOTES, 'UTF-8');
   $zipcode = htmlspecialchars($_POST['registration_zip'], ENT_QUOTES, 'UTF-8');
 
-  // Prüft, ob eine der Variablen leer ist. Wenn nicht wird der Nutzer gebeten die Eingabe zu ergänzen
+  // Prüft, ob eine der Variablen leer ist. Wenn nicht wird der Nutzer gebeten die Eingabe zu ergänzen (Fehler: emptyfields)
   if (empty($firstname) || empty($lastname) || empty($email) || empty($password) || empty($street) || empty($housenumber) || empty($city) || empty($zipcode)){
     header('location: ../registration.php?error=emptyfields&firstname='.$firstname.'&lastname='.$lastname.'&email='.$email.'&street='.$street.'&housenumber='.$housenumber.'&city='.$city.'&zipcode='.$zipcode);
     exit();
 
   // Prüfung der Emailaddresse -> ist dies eine mögliche Emailaddresse
+  // Wenn nicht, wird weiterleiten auf Registrierenseite (Fehler: invalidemail)
   } else if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     header('location: ../registration.php?error=invalidemail&firstname='.$firstname.'&lastname='.$lastname.'&email=&street='.$street.'&housenumber='.$housenumber.'&city='.$city.'&zipcode='.$zipcode);
     exit();
 
-  // prueft ob die Strasse eine Zahl enthaelt, wenn ja, wird abgebrochen, wenn nicht wird registrierung durchgefuehrt
+  // prueft ob die Strasse eine Zahl enthaelt, wenn ja, wird abgebrochen, wenn nicht wird registrierung durchgefuehrt (Fehler: invalidstreet)
   } else if(preg_match('/[0-9]/', $street) == 1) {
     header('location: ../registration.php?error=invalidstreet&firstname='.$firstname.'&lastname='.$lastname.'&email='.$email.'&street=&housenumber='.$housenumber.'&city='.$city.'&zipcode='.$zipcode);
     exit();
   }
 
-  // könnte ausgelagert werden -> emailAlreadyExist(); oder so ähnlich
   // Erstellt Datenbankabfrage, um zu prüfen, ob Email bereits registriert ist
+  // kommt es dabei zu einem Fehler Weiterleitung auf Registrierenseite (Fehler: sqlerror)
   $sql_emailcheck = $connection->prepare("SELECT * FROM user WHERE email = ?");
   if(!$sql_emailcheck){
     header('location: ../registration.php?error=sqlerror');
@@ -65,6 +67,7 @@
     }
 
     // automtisches einloggen des Nutzers nach erstellen des Kontos, durch setzen der Session
+    // und anschließendes weiterleiten auf die Indexseite
     session_start();
     $_SESSION['userid'] = $sql_registration->insert_id;
     $_SESSION['useremail'] = $email;
@@ -75,6 +78,7 @@
     exit();
 
   // Wenn es bereits einen Eintrag gibt, wird der Nutzer darauf hingewiesen, dass diese Email bereits registriert ist
+  // Alle eingaben, abgesehen von Email und Passwort werden als URL Parameter mitgegeben
   }else{
     header('location: ../registration.php?error=usedemail&firstname='.$firstname.'&lastname='.$lastname.'&email=&street='.$street.'&housenumber='.$housenumber.'&city='.$city.'&zipcode='.$zipcode);
     exit();

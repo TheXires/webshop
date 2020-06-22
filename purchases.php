@@ -1,13 +1,15 @@
 <?php
   require 'header.php';
+
+  // Wenn Nutzer nicht angemeldet ist, wird er auf die login.php Seite weitergeleitet
   if(!isset($_SESSION['userid'])){
     header('location: login.php');
     exit();
   }
 ?>
+  <!-- Hier findet der Nutzer alle seine bisherigen Käufe -->
   <div class="row justify-content-center">
     <div class="col-10  col-sm-9 col-md-8 col-lg-7 col-xl-6">
-      <!-- Suche nach Nutzern durch Admin -->
       <h1>Bisherige K&auml;ufe</h1>
       <table class="table" id="purchases">
         <thead class="thead-dark">
@@ -21,7 +23,7 @@
             <th scope="col">Datum</th>
           </tr>
         </thead>
-        <!-- Wird durch js\purchases.js gefüllt -->
+        <!-- Wird durch JS mit allen Käufen angemeldeten des Nutzers gefüllt -->
       </table>
     </div>
   </div>

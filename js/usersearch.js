@@ -1,4 +1,4 @@
-$('#button_id2').click(function(){
+$('#usersearch_button').click(function(){
 
   // Leert alle Vorhandenen Einträge aus der Liste, um dopplungen zu verhindern
   $('.table_value').remove();

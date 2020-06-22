@@ -24,7 +24,7 @@ $(document).ready(function(){
             "<td>" + purchase.model + "</td>" +
             "<td>" + purchase.conditionName + "</td>" +
             "<td>" + purchase.quantity + "</td>" +
-            "<td>" + purchase.price + "</td>" +
+            "<td>" + purchase.price + "&euro;</td>" +
             "<td>" + purchase.date + "</td>" +
             "</tr>" +
           "");

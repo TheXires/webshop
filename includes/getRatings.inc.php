@@ -1,19 +1,19 @@
 <?php
   require 'connection.inc.php';
 
-  // prüfen ob eine articelID übergeben wird, wenn nicht direkt abbrechen
+  // Wenn keine AritkelID übergeben, wird auf Startseite weitergeleitet (Fehler: noarticleid)
   if(!isset($_POST['articleID'])){
     header("location: ../index.php?error=noarticleid");
     exit();
   }
 
-  // setzen der Variablen und schützen vor xss
+  // setzen der Variablen
   $articleID = $_POST['articleID'];
 
-  // Bereite sql Abfrage vor
+  // Bereitet SQL-Abfrage zum Erhalten der durchschnittliche Bewertung eines Artikels vor
+  // wenn es Fehler gibt, wird auf Startseite weitergeleitet (Fehler: sqlerror)
   $sql = $connection->prepare("SELECT AVG(ratings.rating) AS rating FROM ratings WHERE ratings.articleID = ?");
   if(!$sql){
-    // wenn es Fehler gibt, soll auf Startseite weitergeleitet werden und anschlißend script verlassen wern
     header('location: ../index.php?error=sqlerror');
     exit();
   }
@@ -23,16 +23,14 @@
   $sql->execute();
   $sql_result = $sql->get_result();
 
-  // wenn es ein ergebnis gibt, werden Variablen gesetzt
+  // wenn es ein ergebnis gibt, werden Variablen mit der jeweiligen Bewertung gesetzt
+  // sonst wird auf Startseite weitergeleitet (Fehler: noratingsfound)
   if($row = $sql_result->fetch_assoc()){
     if($row['rating'] == null){
       echo 0;
     }else{
       echo $row['rating'];
     }
-
-
-  //sonst wird auf Startseite weitergeleitet
   }else{
     header("location: ../index.php?error=noratingsfound");
     exit();

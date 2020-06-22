@@ -1,8 +1,3 @@
-// $(document).load(function(){
-//
-//
-// });
-
 $('#search').click(function(){
   $('#searchresults').empty();
 
@@ -20,6 +15,7 @@ $('#search').click(function(){
       // Rückgabe aus PHP Datei in JS Objekt umwandeln
       var results = JSON.parse(pResults);
 
+      // Für jeden Artikel der in JSON Datei steht wird eine Karte angelegt, die in das Gridsystem eingefgt wird
       results.forEach(function(article) {
         $('#searchresults').append( "" +
           "<div class='grid_item product'>" +
@@ -39,7 +35,10 @@ $('#search').click(function(){
   });
 });
 
+// bekommt eine ArtikelID übergeben und gibt die drchscnhittliche Bewertung dieses Artikels als Sternen in einem String zurück
 function getRating(articleID){
+  // String wird gesetzt und später angepassst, je nach Anzahl der Sterne
+  // Ist es weniger als 1 Stern, wird der String so zurück gegeben
   var starString = 'Keine Bewertungen';
 
   $.ajax({
@@ -59,6 +58,8 @@ function getRating(articleID){
       // voll <i class="fas fa-star">
       // leer <i class="far fa-star">
 
+      // prüft wie viele Stere der Artikel durchschnittlich hat und gibt dementsprechend einen String zurück
+      // Sollte es weniger als ein Stern sein, hat der Artikel keine Bewertungen und wird daher nicht bearbeitet
       if(pResults == 5.0){
         console.log("called 5");
         starString = '<span class="text-warning"><i class="fas fa-star"> </i><i class="fas fa-star"> </i><i class="fas fa-star"> </i><i class="fas fa-star"> </i><i class="fas fa-star"> </i></span>';

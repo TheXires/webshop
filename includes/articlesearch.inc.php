@@ -1,9 +1,9 @@
 <?php
   require 'connection.inc.php';
 
-  // prüfen ob eine articelID übergeben wird, wenn nicht direkt abbrechen
+  // prüfen ob eine articelID übergeben wird, wenn nicht direkt abbrechen (Fehler: nosearchparameters)
   if(!isset($_POST['searchParam'])){
-    header("location: ../index.php?error=noasearchparameters");
+    header("location: ../index.php?error=nosearchparameters");
     exit();
   }
 
@@ -11,14 +11,14 @@
   $likeSearchParam = '%'.htmlspecialchars($_POST['searchParam'], ENT_QUOTES, 'UTF-8').'%';
   $searchParam = htmlspecialchars($_POST['searchParam'], ENT_QUOTES, 'UTF-8');
 
-  // Bereite sql Abfrage vor
+  // Bereitet sql Abfrage für die Arikelsuche vor
   $sql = $connection->prepare("SELECT articleID, brand.name AS brandName, model, conditions.name AS conditionName, size, storage, price, img, stock
                                FROM article, brand, conditions
                                WHERE article.brandID = brand.brandID
                                AND article.conditionID = conditions.conditionID
                                AND ((brand.name LIKE ? OR model LIKE ?) OR ((? LIKE CONCAT('%', brand.name, '%')) OR (? LIKE CONCAT('%', model, '%'))))");
   if(!$sql){
-    // wenn es Fehler gibt, soll auf Startseite weitergeleitet werden und anschlißend script verlassen wern
+    // wenn es Fehler gibt, soll auf Startseite weitergeleitet werden und anschlißend script verlassen werden (Fehler: sqlerror)
     header('location: ../index.php?error=sqlerror');
     exit();
   }
@@ -28,20 +28,14 @@
   $sql->execute();
   $sql_result = $sql->get_result();
 
-  // wenn es ein ergebnis gibt, werden Variablen gesetzt
+  // prüfen, ob es mindestens ein ergebnis gibt
+  // Wenn ja, wird ein Objekt erstellt, in dem das Ergibnis der sql Abfrage zu JSON Datei umgewandelt werden kann
+  // Wenn nicht, abbrechen und weiterleiten (Fehler: noarticlesfound)
   if($sql_result->num_rows > 0){
-    // erstellen eines Objektes, in dem das ergibnis der sql Abfrage zu JSON Datei umgewandelt werden kann
     $myObj = new \stdClass();
-    // füllen des Objektes mit einzelnen Datensätzen aus der Datenbank
     $myObj = $sql_result->fetch_all(MYSQLI_ASSOC);
-
-    // umkodieren des Objektes in JSON Format
     $myJSON = json_encode($myObj);
-
-    // rückgabe der JSON Datei
     echo $myJSON;
-
-  //sonst wird auf Startseite weitergeleitet
   }else{
     header("location: ../index.php?error=noarticlesfound");
     exit();

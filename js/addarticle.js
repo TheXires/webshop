@@ -5,14 +5,13 @@
   // trennt die Parameter vom 'Naviationsteil'
   urlParams = new URLSearchParams(url);
 
-  // prueft ob parameter in Parameterliste steht
+  // if-Anweisungen prüfen, ob parameter in Parameterliste steht
+  // Wenn ja, Parameter für jeweiliges inputfeld suchen und ausfüllen
   if(urlParams.has('articleid')){
-    // sucht zum Parameter passendes inputfeld und fuellt inputfeld mit parameter
     $('#hiddenArticleID').val(urlParams.get('articleid'));
   }
-  console.log("1");
+
   if(urlParams.has('brand')){
-    console.log("2");
     $('#smartphone_brand').val(urlParams.get('brand'));
   }
 
@@ -40,9 +39,9 @@
     $('#smartphone_price').val(urlParams.get('price'));
   }
 
-
+// sichtbarer Dateiname in Upload
 $('#smartphone_img').on('change',function(){
-  //get the file name
+  // holt den Namen der Datei
   var path = $(this).val();
   // löscht pfad soweit, dass nur noch der Dateiname vorhanden ist
   var fileName = path.replace(/^.*(\\|\/|\:)/, '');

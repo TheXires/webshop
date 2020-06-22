@@ -32,6 +32,7 @@ $(document).ready(function(){
   });
 });
 
+// Bekommt eine Zahl übergeben und gibt String mit passender Sterne Zahl zurück
 function ratingInStars(rating){
   if(rating == 1){
     return '<span class="text-warning"><i class="fas fa-star"> </i></span><span class="text-secondary"><i class="far fa-star"> </i><i class="far fa-star"> </i><i class="far fa-star"> </i><i class="far fa-star"> </i></span>';

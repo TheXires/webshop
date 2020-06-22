@@ -1,5 +1,11 @@
 <?php
   require 'header.php';
+
+  // Wenn Nutzer nicht eingeloggt oder kein Admin ist, wird er auf startseite weitergeleitet
+  if(!isset($_SESSION['admin']) || $_SESSION['admin'] != 1){
+    header('location: index.php');
+    exit();
+  }
 ?>
   <div class="row justify-content-center">
     <div class="col-10  col-sm-9 col-md-8 col-lg-7 col-xl-6">
@@ -13,7 +19,7 @@
         </div>
         <div class="col">
           <!-- Button zum ausführen der Suche mit entsprechendem Parameter aus obrigem Eingabefeld -->
-          <button type="button" id="button_id2" class="btn btn-primary">Suche</button>
+          <button type="button" id="usersearch_button" class="btn btn-primary">Suche</button>
         </div>
       </div>
 
@@ -22,7 +28,7 @@
       <div>
         <h2>Suchergebnisse</h2>
 
-        <!-- Tabelle in der alle Nutzer angezeigt werden -->
+        <!-- Tabelle in der alle gefundenen Nutzer angezeigt werden -->
         <table class="table" id="user">
           <thead class="thead-dark">
             <tr>

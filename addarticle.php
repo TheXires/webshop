@@ -1,10 +1,14 @@
 <?php
   require 'header.php';
+
+  // Wenn Nutzer nicht eingelogges, wird der auf loginseite weitergeleitet (Fehler: notloggedin)
   if(!isset($_SESSION['userid'])){
-    header('location: login.php');
+    header('location: login.php?error=notloggedin');
   }
-  if($_SESSION['admin'] == 0){
-    header('location: index.php');
+
+  // Wen Nutzer kein Admin ist, wird er auf die Startseite weitergeleitet. (Fehler: missingpermissions)
+  if($_SESSION['admin'] != 1){
+    header('location: index.php?error=missingpermissions');
   }
 ?>
 <div class="row justify-content-center">
@@ -47,6 +51,7 @@
         </div>
 
         <!-- Auswahl des Zustandes -->
+        <!-- Mögliche Auswahl aus "Wie neu", "Sehr gut", "Gut" und "Stark genutzt" -->
         <div class="form-group col-md-4">
           <label for="smartphone_name">Zustand</label>
           <select class="browser-default custom-select" id="smartphone_condition" name="smartphone_condition" required>
@@ -59,6 +64,7 @@
         </div>
 
         <!-- Auswahl der Speichergröße -->
+        <!-- Mögliche Auswahl aus "64 GB", "128 GB", "256 GB" und "512 GB" -->
         <div class="form-group col-md-4">
           <label for="smartphone_name">Speicher</label>
           <select class="browser-default custom-select" id="smartphone_storage" name="smartphone_storage" required>
@@ -95,8 +101,8 @@
         </div>
       </div>
 
-      <!-- Button zu senden des Formulares -->
-      <button type="submit" class="btn btn-primary" name="smartphone_add">Hinzuf&uuml;gen</button>
+      <!-- Button zu senden des Formulares um Artikel hinzuzufügen -->
+      <button type="submit" class="btn btn-primary" name="smartphone_add" value="add">Hinzuf&uuml;gen</button>
     </form>
   </div>
 </div>

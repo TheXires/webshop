@@ -3,27 +3,24 @@
   require 'includes/userinfo.inc.php';
 
   if(!isset($_SESSION['userid'])){
-    header('location: index.php');
+    header('location: login.php');
     exit();
   }
 ?>
 
 <div class="row justify-content-center">
   <div class="col-10  col-sm-9 col-md-8">
-    <!-- col-xl-6 -->
-
     <center><h2>Konto</h2></center>
     <br>
 
     <!-- Anfang erste Zeile -->
     <div class="row">
-      <!-- Persoenliche Daten und Passowrt aendern -->
+      <!-- Persoenliche Daten und Passowrt ändern -->
       <div class="col-sm-4 mb-2">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Persönliche Daten</h5>
             <p class="card-text">
-              <!-- Sollte vielleicht eher mit JS und dann ajax gelöst werden, aber habe ich erst später gelernt, daher später noch überarbeiten -->
               <!-- Persoenliche Daten werden aus Datenbank gelesen und hier eingefuegt -->
               <?php
                 echo "<p><span class='font-weight-bold'> Name </span> <br>" . $firstname . " " . $lastname . "</p><p><span class='font-weight-bold'> Anschrift </span><br>" . $street . ", " . $housenumber . "<br>" . $zip . ", " . $city . "</p>";
@@ -150,40 +147,47 @@
         <!-- Form führt sendet Daten noch nicht richtig weiter, müsste noch implemenitert werden -->
         <form action="includes/#.inc.php" method="post">
           <div class="form-row">
+            <!-- Inputfeld zum ändern des Vornamen -->
             <div class="form-group col-md-6">
               <label for="edit_firstname">Vorname</label>
               <input type="text" class="form-control" id="edit_firstname" name="edit_firstname" placeholder="Vorname" autofocus>
             </div>
 
+            <!-- Inputfeld zum ändern des Nachnamen -->
             <div class="form-group col-md-6">
               <label for="edit_lastname">Nachname</label>
               <input type="text" class="form-control" id="edit_lastname" iname="edit_lastname" placeholder="Nachname">
             </div>
           </div>
 
+          <!-- Inputfeld zum ändern der Email -->
           <div class="form-group">
             <label for="edit_email">Email</label>
             <input type="email" class="form-control" id="edit_email" name="edit_email" placeholder="Email">
           </div>
 
+          <!-- Inputfeld zum ändern der Straße -->
           <div class="form-row">
             <div class="form-group col-md-9">
               <label for="edit_street">Straße</label>
               <input type="text" class="form-control" id="edit_street" name="edit_street" placeholder="Straße">
             </div>
 
+            <!-- Inputfeld zum ändern der Hausnummer -->
             <div class="form-group col-md-3">
               <label for="edit_houseNumber">Hausnummer</label>
               <input type="number" class="form-control" id="edit_houseNumber" name="edit_houseNumber" placeholder="13">
             </div>
           </div>
 
+          <!-- Inputfeld zum ändern der Stadt -->
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="edit_city">Stadt</label>
               <input type="text" class="form-control" id="edit_city" name="edit_city" name="registration_city" placeholder="Stadt">
             </div>
 
+            <!-- Inputfeld zum ändern der Postleitzahl -->
             <div class="form-group col-md-6">
               <label for="edit_zip">Postleitzahl</label>
               <input type="number" class="form-control" id="edit_zip" name="edit_zip" placeholder="PLZ">
@@ -191,6 +195,9 @@
           </div>
 
       </div>
+
+      <!-- Button zur Bestätigung, bzw. zum Abbrechen -->
+      <!-- Button zur Bestätigung momentan deaktiviert, da Funktion nur vorbereitet, nicht implementiert -->
       <div class="modal-footer">
           <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Abbrechen</button>
           <button type="submit" class="btn btn-success disabled" name="edit_submit" disabled>Speichern</button>
@@ -205,16 +212,19 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <!-- Titel des Modals -->
         <h5 class="modal-title" id="deleteModalTitle">Konto L&ouml;schen</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <!-- Haupttext des Modals -->
       <div class="modal-body">
         <p>Sind Sie sich sicher, dass Sie Ihr Konto entg&uuml;ltig l&ouml;schen wollen?</p>
         <p class="text-danger">Der L&ouml;schvorgang kann <span class="font-weight-bold">nicht</span> r&uuml;ckg&auml;ngig gemacht werden!</p>
       </div>
       <div class="modal-footer">
+        <!-- Form im Modal zum Löschen des Nutzers -->
         <form action="includes/deleteuser.inc.php" method="post">
           <button type="submit" class="btn btn-danger mr-2" name="delete_submit">Konto L&ouml;schen</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>

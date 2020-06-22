@@ -6,8 +6,12 @@ $(document).ready(function(){
 
   // trennt die Parameter vom 'Naviationsteil'
   urlParams = new URLSearchParams(url);
+  if(!urlParams.has('articleid')){
+    window.location.replace("index.php?error=noarticlenumber");
+    return;
+  }
 
-  // Setzen der unsichtbaren Inputs, um articleID aus der URL zum editieren oder löschen zu übergeben
+  // Setzen der Werte für unsichtbaren Inputs, um articleID aus der URL zum editieren oder löschen an PHP zu übergeben
   $('#hiddenEditID').val(urlParams.get('articleid'));
   $('#hiddenDeleteID').val(urlParams.get('articleid'));
   $('#hiddenPurchaseID').val(urlParams.get('articleid'));
@@ -15,11 +19,12 @@ $(document).ready(function(){
   // ruft Funktion um Tabelle mit Artikel Informationen zu erstellen
   creatArtikelinformation(urlParams);
 
+  // Wenn aktueller Nutzer das Produktbereitsbewertet hat, wird das Bewertenfeld entfernt
   if(hasRated()){
     $('#ratingDialog').remove();
   }
 
-  // ruft Funktion um Liste mit Bewertungen zu erstellen
+  // ruft Funktion auf um Liste mit Bewertungen zu erstellen
   createUserRating(urlParams);
 });
 
@@ -34,17 +39,16 @@ $('#rateButton').click(function(){
     type: 'POST',
     // ziel Datei in der Daten weiterverarbeitet werden
     url: 'includes/rate.inc.php',
-    // Sucheingabe, die übermittelt werden soll
+    // Bewertung, die übermittelt werden soll
     data: {
         'articleid': urlParams.get('articleid'),
         'rating': rating,
         'description': $('#ratingDescription').val()
     },
     success: function(pResult){
-      // PHP Funktion antwortet mit 1, wenn alles funktioniert hat. Sonst mit 0.
-      console.log(pResult);
+      // PHP Funktion antwortet mit 'success', wenn alles funktioniert hat.
+      // Sonst mit entsprechendem Fehler.
       if(pResult == 'success'){
-        console.log('called');
         $('#ratingDialog').remove();
         createUserRating(urlParams);
       }
@@ -53,8 +57,11 @@ $('#rateButton').click(function(){
 });
 
 // ------------ Funktionen ------------
+// Prüft ob die vom Nutzer eingegebene Stückzahl noch verfügbar ist
+// Wann ja, wird das möglicherweise vorhandene is-invalid entfernt und der Button enabled
+// Wenn nicht, wird das Inputfeld aus is-invalid gesetzt und der Button disabled
 function checkAvailability() {
-  if($('#purchaseQuantity').val().length === 0 || $('#purchaseQuantity').val() == 0){
+  if($('#purchaseQuantity').val().length === 0 || $('#purchaseQuantity').val() <= 0){
     $('#purchaseButton').attr("disabled", true);
     $('#purchaseButton').addClass("mb-4");
     $('#purchaseQuantity').addClass("is-invalid");
@@ -69,10 +76,11 @@ function checkAvailability() {
   }
 }
 
+// Setzt die anzahl der Sterne, die der Nutzer vergeben möchte anhand des Buttons der geklicked wurde
 function changeRating(button){
 
-  // voll <i class="fas fa-star">
-  // leer <i class="far fa-star">
+  // voll <i class="fas fa-star"> -> fas
+  // leer <i class="far fa-star"> -> far
 
   // prüft, welcher Button geklicked wurde und passt sternen Anzah darauf an
   if(button == 1){
@@ -113,10 +121,7 @@ function changeRating(button){
   }
 }
 
-function setRating(){
-  // rating = ratings.rating
-}
-
+// Erstellt eine Tabelle mit allen Informationen zum Artikel und einem Bild daneben
 function creatArtikelinformation(urlParams){
   // prueft ob parameter in Parameterliste steht
   if(urlParams.has('articleid')){
@@ -130,12 +135,15 @@ function creatArtikelinformation(urlParams){
           'articleid': urlParams.get('articleid')
       },
       success: function(pResults){
+        // Es wird auf mögliche Fehler geprüft und demensprechend weitergeleitet
         if(pResults == 'noarticlenumber'){
           console.log(pResults);
+          window.location.replace("index.php?error=noarticlenumber");
           return;
         }
         if(pResults == 'iddoesnotexist'){
           console.log(pResults);
+          window.location.replace("index.php?error=noarticlefound");
           return;
         }
         if(pResults == 'sqlerror'){
@@ -146,6 +154,7 @@ function creatArtikelinformation(urlParams){
         // Rückgabe aus PHP Datei in JS Objekt umwandeln
         var results = JSON.parse(pResults);
 
+        // Bild und weitere Artikelinformationen werden aus JSON Datei gelesen und gesetzet
         results.forEach(function(device) {
 
           $('#img').attr('src', device.img);
@@ -165,7 +174,7 @@ function creatArtikelinformation(urlParams){
                 '<td>' + device.size + '&quot;</td>' +
               '</tr><tr>' +
                 '<th>Speicher</th>' +
-                '<td>' + device.storage + '</td>' +
+                '<td>' + device.storage + ' GB</td>' +
               '</tr><tr>' +
                 '<th>Preis</th>' +
                 '<td>' + device.price + '&euro;</td>' +
@@ -174,6 +183,9 @@ function creatArtikelinformation(urlParams){
           );
 
           $('#inStock').html(device.stock);
+
+          // Es wird ein String zusammen gebaut, damit der Admin, wenn er den Artikel bearteiten möchte
+          // alle Felder in der Maske vorausgefüllt bekommt
           $('#changeForm').attr('action', 'changeArticle.php?articleid=' +
             urlParams.get('articleid') +
             '&brand=' + device.brandName +
@@ -193,7 +205,7 @@ function creatArtikelinformation(urlParams){
   }
 }
 
-
+// Erstellt eine Liste der Kommentare der Nutzer, die diesen Aritkel bewertet haben
 function createUserRating(urlParams){
   // prueft ob parameter in Parameterliste steht
   if(urlParams.has('articleid')){
@@ -230,6 +242,8 @@ function createUserRating(urlParams){
         // Rückgabe aus PHP Datei in JS Objekt umwandeln
         var results = JSON.parse(pResults);
 
+        // Folgernder Bereich, baut String zusammen, der jeweils einen Kommentar darstellt.
+        // durch for-each-Schleife, wird für alle im JSON Dokument enthaltenen Bewertungen ein Listeneintrag erstellt
         var ratingsList = '<ul class="list-group list-group-flush">';
         results.forEach(function(rating) {
           ratingsList += '' +
@@ -282,6 +296,8 @@ function createUserRating(urlParams){
         });
 
         ratingsList += '</ul>';
+
+        // Der  zusammengebaute String wir hier hinten an die bisherige Liste angehängt
         $('#ratings').append(ratingsList);
 
       }
@@ -289,8 +305,9 @@ function createUserRating(urlParams){
   }
 }
 
-
+// Gibt zurück, ob der Nutzer, dessen ID übergeben wird den aktuellen Artikel gekauft hat
 function hasBought(userID){
+    // Wert der später zurück gegeben wird. Hat der Nutzer den Artikel gekauft, wird dieser Wert später auf ture gesetzt
   var result = false;
 
   $.ajax({
@@ -307,13 +324,16 @@ function hasBought(userID){
         'changeFunction': 'hasBought'
     },
     success: function(pResults){
+      // speichert den Rückgabewert auf das, was die Datenbank ausgibt
       result = pResults;
     }
   });
   return result;
 }
 
+// Gibt zurück, ob der eingeloggte Nutzer den aktuellen Artikel gekauft hat
 function hasRated(){
+  // Wert der später zurück gegeben wird. Hat der Nutzer den Artikel gekauft, wird dieser Wert später auf ture gesetzt
   var result = false;
 
   $.ajax({
@@ -329,6 +349,7 @@ function hasRated(){
         'changeFunction': 'hasRated'
     },
     success: function(pResults){
+      // speichert den Rückgabewert auf das, was die Datenbank ausgibt
       result = pResults;
     }
   });

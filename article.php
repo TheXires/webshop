@@ -5,23 +5,25 @@
   <div class="container">
 
     <!-- Wird nur angezeigt, wenn angemeldeter Nutzer Admin ist -->
-    <!-- Erlaubt es Admin den Artikel zu bearbeiten -->
+    <!-- Erlaubt es Admin den Artikel zu bearbeiten oder zu löschen-->
     <?php if(isset($_SESSION['admin'])){
       if($_SESSION['admin'] == 1){ ?>
         <div class="alert alert-warning">
           <div class="row justify-content-between">
             <div class="ml-1 mt-1">
-              <h4>Diesen Artikel</h4>
+              <h4>Artikel oder Verfügbarkeit: </h4>
             </div>
             <!-- hidden...IDs sind Inputfelder für die Formulare, die in JS mit der ArtikelID gefüllt werden,
                  damit mit dieser in PHP weiter gearbeitet werden kann -->
             <div class="ml-auto mr-1">
+              <!-- Form zum Bearbeiten des Artikels -->
               <form id="changeForm" method="post">
                 <input type="hidden" id="hiddenEditID" name="articleid">
-                <button type="submit" class="btn btn-secondary">Bearbeiten</button>
+                <button type="submit" class="btn btn-secondary">Anpassen</button>
               </form>
             </div>
             <div class="mr-1">
+              <!-- Form zum Löschen des Artikels -->
               <form action="includes/deleteArticle.inc.php" method="post">
                 <input type="hidden" id="hiddenDeleteID" name="articleid">
                 <button type="submit" class="btn btn-danger">L&ouml;schen</button>
@@ -34,15 +36,15 @@
 
 
     <div class="row">
-      <!-- Bild -->
-      <img class="col-md-6 align-self-center" id="img">
+      <!-- Produktbild, wird durch JS gesetzt -->
+      <img class="col-md-6 align-self-center" id="img" alt="Produktbild">
 
-      <!-- Tabelle wird dynamisch  -->
+      <!-- Tabelle mit Artikelinformationen wird dynamisch druch JS erzeugt -->
       <div class="col-md-6 align-self-center" id="infos"></div>
     </div>
     <div class="row justify-content-between">
       <div class="col-auto mt-3 mb-3">
-        <!-- Wird durch JS dynamisch auf die verfügbare Anzahl gesetzt -->
+        <!-- Anzahl verfügbarer Artikel wird durch JS dynamisch gesetzt -->
         Noch <span class="font-weight-bold" id="inStock">0</span> auf Lager
       </div>
       <form class="form-inline" action="includes/purchaseArticle.inc.php" method="POST">
@@ -75,24 +77,26 @@
     <?php if(isset($_SESSION['userid'])){ ?>
       <div id="ratingDialog" class="alert alert-secondary">
         <h5>Nutzen Sie die Gelegenheit und helfen Sie anderen Nutzern durch ihre Bewertung bei der Kaufentscheidung</h5>
+        <!-- Buttons die anzahl der Sterne anzeigen -->
         <div class="form-group">
           <button type="button" class="btn starRating" id="star_1" onclick="changeRating(1)"><i class="fas fa-star"></i></button>
           <button type="button" class="btn starRating" id="star_2" onclick="changeRating(2)"><i class="far fa-star"></i></button>
           <button type="button" class="btn starRating" id="star_3" onclick="changeRating(3)"><i class="far fa-star"></i></button>
           <button type="button" class="btn starRating" id="star_4" onclick="changeRating(4)"><i class="far fa-star"></i></button>
           <button type="button" class="btn starRating" id="star_5" onclick="changeRating(5)"><i class="far fa-star"></i></button>
-          <!-- sieht in FireFox noch sehr schlecht aus. In Chrom ists gut -->
         </div>
+        <!-- Textfeld in dem der Nutzer seine Bewertung frei Formulieren kann -->
         <div class="form-group col-12">
           <label for="ratingDescription">Beschreibung</label>
           <textarea class="form-control" id="ratingDescription" rows="4"></textarea>
         </div>
+        <!-- Button zum senden der Bewertung -->
         <button type="button" id="rateButton" class="btn btn-primary mr-1">Bewerten</button>
       </div>
     <?php } ?>
 
 
-    <!-- Liste wird dynamisch  -->
+    <!-- Liste wird dynamisch durch JS erstellt -->
     <h3>Bewertungen</h3>
     <div id="ratings"></div>
 </div>

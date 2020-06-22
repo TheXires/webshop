@@ -1,10 +1,12 @@
 <?php
   require 'header.php';
   if(!isset($_SESSION['userid'])){
-    header('location: login.php');
+    header('location: login.php?error=notloggedin');
+    exit();
   }
   if($_SESSION['admin'] == 0){
-    header('location: index.php?why');
+    header('location: index.php?error=missingpermissions');
+    exit();
   }
 ?>
 <div class="row justify-content-center">
@@ -49,6 +51,7 @@
         </div>
 
         <!-- Auswahl des Zustandes -->
+        <!-- Mögliche Auswahl aus "Wie neu", "Sehr gut", "Gut" und "Stark genutzt" -->
         <div class="form-group col-md-4">
           <label for="smartphone_name">Zustand</label>
           <select class="browser-default custom-select" id="smartphone_condition" name="smartphone_condition" required>
@@ -61,6 +64,7 @@
         </div>
 
         <!-- Auswahl der Speichergröße -->
+        <!-- Mögliche Auswahl aus "64 GB", "128 GB", "256 GB" und "512 GB" -->
         <div class="form-group col-md-4">
           <label for="smartphone_name">Speicher</label>
           <select class="browser-default custom-select" id="smartphone_storage" name="smartphone_storage" required>
@@ -98,7 +102,7 @@
       </div>
 
       <!-- Button zu senden des Formulares -->
-      <button type="submit" class="btn btn-primary" name="smartphone_change">Speichern</button>
+      <button type="submit" class="btn btn-primary" name="smartphone_change" value="change">Speichern</button>
     </form>
   </div>
 </div>

@@ -5,9 +5,9 @@
   // trennt die Parameter vom 'Naviationsteil'
   urlParams = new URLSearchParams(url);
 
-  // prueft ob parameter in Parameterliste steht
+  // if-Anweisungen prüfen, ob parameter in Parameterliste steht
+  // Wenn ja, Parameter für jeweiliges inputfeld suchen und ausfüllen
   if(urlParams.has('firstname')){
-    // sucht zum Parameter passendes inputfeld und fuellt inputfeld mit parameter
     $('#registration_firstname').val(urlParams.get('firstname'));
   }
 
@@ -37,6 +37,9 @@
 
 
   // prüft ob beide Passwörter gleich sind
+  // Wenn ja werden alle is-invalid markierungen entfernt und der bestätigen Button aktiviert
+  // Wenn nicht, werden Inputfelder mit is-invalid markeirt und der bestätigen Button deaktiviert
+  // Ist eins der beiden Felder leer, wird keine is-invalid Markierung gesetzt
   function passwordCheck(){
     var password = $('#registration_password').val();
     var password_repeat = $('#registration_password_repeat').val();
