@@ -1,4 +1,6 @@
 $('#search').click(function(){
+  // Entfernen der Elemetnte, die aktuell den benötigten Platz belegen
+  $('#buyUsedAdvantages').remove();
   $('#searchresults').empty();
 
   $.ajax({
@@ -53,7 +55,6 @@ function getRating(articleID){
         'articleID': articleID
     },
     success: function(pResults){
-      console.log(pResults);
 
       // voll <i class="fas fa-star">
       // leer <i class="far fa-star">

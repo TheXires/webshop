@@ -17,6 +17,41 @@
   <!-- Inhalte die Shop erklären eintragen mit Bild -->
 </div>
 
+<!-- Infokarten, "Warum gebraucht kaufen?" - Werden durch JS entfernt sobald gesucht wird -->
+<div id="buyUsedAdvantages" class="row justify-content-center mt-5">
+  <div class="col-10 col-sm-9 col-md-8 col-lg-7 col-xl-6 mt-5">
+    <h2>Warum gebraucht kaufen?</h2>
+    <div class="card-deck mt-3">
+      <div class="card">
+        <div class="card-body justify-content-center">
+          <center>
+            <h5 class="card-title text-success">Umweltschutz</h5>
+            &nbsp;&nbsp;
+            <p class="card-text"><i class="fas fa-seedling fa-9x text-success"></i></p>
+          </center>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <center>
+            <h5 class="card-title text-danger">Sparen</h5>
+            &nbsp;&nbsp;
+            <p class="card-text"><i class="fas fa-piggy-bank fa-9x text-danger"></i></p>
+          </center>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <center>
+            <h5 class="card-title text-primary">Recyclen</h5>
+            &nbsp;&nbsp;
+            <p class="card-text"><i class="fas fa-recycle fa-9x text-primary"></i></p>
+          </center>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 <script src="js\articlesearch.js" charset="utf-8"></script>
