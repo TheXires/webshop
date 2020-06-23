@@ -22,6 +22,8 @@
   <div class="col-10 col-sm-9 col-md-8 col-lg-7 col-xl-6 mt-5">
     <h2>Warum gebraucht kaufen?</h2>
     <div class="card-deck mt-3">
+
+      <!-- Umweltschutzkarte -->
       <div class="card">
         <div class="card-body justify-content-center">
           <center>
@@ -31,6 +33,8 @@
           </center>
         </div>
       </div>
+
+      <!-- Sparenkarte -->
       <div class="card">
         <div class="card-body">
           <center>
@@ -40,10 +44,12 @@
           </center>
         </div>
       </div>
+
+      <!-- Recycnlnkarte -->
       <div class="card">
         <div class="card-body">
           <center>
-            <h5 class="card-title text-primary">Recyclen</h5>
+            <h5 class="card-title text-primary">Recyceln</h5>
             &nbsp;&nbsp;
             <p class="card-text"><i class="fas fa-recycle fa-9x text-primary"></i></p>
           </center>
@@ -52,7 +58,6 @@
     </div>
   </div>
 </div>
-
 
 <script src="js\articlesearch.js" charset="utf-8"></script>
 <?php

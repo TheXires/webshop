@@ -65,6 +65,19 @@
     exit();
   }
 
+  // Wenn Stückzahl negativ sein sollte wird auf ../addarticle.php, bzw. ../changeArticle.php weitergeleitet (Fehler: invalidinputs)
+  if($storage < 0 || $size < 0 || $price < 0){
+    header('location: ../'.$filename.
+        'error=invalidinputs'.
+        '&brand='.$brandName.
+        '&model='.$model.
+        '&size='.$size.
+        '&condition='.$condition.
+        '&storage='.$storage.
+        '&price='.$price);
+    exit();
+  }
+
   // Wenn preis geringer ist als 0, wird auf ../addarticle.php, bzw. ../changeArticle.php weitergeleitet (Fehler: negativprice)
   // Es werden dabei alle möglichen Varaiblen zum vorausfüllen der Inputfelder wieder mitübergeben
   if($price < 0){
@@ -291,7 +304,7 @@
   }
   // Wenn nur bearbeitet wird, ist ArtikelID schon bekannt
 
-  header('location: ../'.$filename.'action=success&articleid='.$articleID);
+  header('location: ../article.php?action=success&articleid='.$articleID);
   exit();
 
   // offene Verbidungen beenden

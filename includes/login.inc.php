@@ -34,7 +34,6 @@
 	// Wenn ein Nutzer mit diesen Daten existriert, wird das Passwort geprüft
 	// Wenn ja, wird das Passwort geprüft
 	// Wenn nicht wird Nutzer auf Loginseite weitergeleitet (Fheler: nomatch)
-	)
   if($row = $sql_login_result->fetch_assoc()){
 		$password_check = password_verify($password, $row['password']);
 

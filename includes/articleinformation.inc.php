@@ -38,7 +38,7 @@
   // Wenn nicht, abbrechen (Fehler: iddoesnotexist)
   if($sql_result->num_rows == 1){
     $myObj = new \stdClass();
-    $myObj = $sql_result->fetch_all(MYSQLI_ASSOC);t
+    $myObj = $sql_result->fetch_all(MYSQLI_ASSOC);
     $myJSON = json_encode($myObj);
     echo $myJSON;
   }else{
